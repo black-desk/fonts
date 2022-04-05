@@ -21,22 +21,11 @@ CSS_TEMPLATE = """\
     font-weight: 700;
     src: url(data:font/ttf;charset-utf-8;base64,{bold});
 }}
-@font-face {{
-    font-family: "{name} Nerd Font";
-    font-style: italic;
-    font-weight: 400;
-    src: url(data:font/ttf;charset-utf-8;base64,{italic});
-}}
-@font-face {{
-    font-family: "{name} Nerd Font";
-    font-style: italic;
-    font-weight: 700;
-    src: url(data:font/ttf;charset-utf-8;base64,{bold_italic});
-}}
 """
 
 
 def download_as_base64(url):
+    print(url)
     # 'https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/{font}/{regular}'
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as r:
@@ -60,7 +49,7 @@ def generate_css(fonts):
                 'bold_italic': 'Bold-Italic/complete/{}%20Bold%20Italic%20Nerd%20Font%20Complete.ttf'.format(name_esc),
             }
             args.update(paths)
-            for key in ('regular', 'bold', 'italic', 'bold_italic'):
+            for key in ('regular', 'bold'):
                 args[key] = download_as_base64(
                     'https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/%s/%s' % (font, args[key]),
                 )
